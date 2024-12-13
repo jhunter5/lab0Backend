@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nombre: MyString
+  area: 1
+  presupuesto: 1.5
+  persona: one
+
+two:
+  nombre: MyString
+  area: 1
+  presupuesto: 1.5
+  persona: two
