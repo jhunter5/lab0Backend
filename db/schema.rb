@@ -10,15 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_12_13_041221) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_14_021918) do
   create_table "municipios", force: :cascade do |t|
     t.string "nombre"
     t.integer "area"
     t.float "presupuesto"
-    t.integer "persona_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["persona_id"], name: "index_municipios_on_persona_id"
   end
 
   create_table "personas", force: :cascade do |t|
@@ -51,7 +49,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_13_041221) do
     t.index ["municipio_id"], name: "index_viviendas_on_municipio_id"
   end
 
-  add_foreign_key "municipios", "personas"
   add_foreign_key "personas", "viviendas"
   add_foreign_key "propietarios", "personas"
   add_foreign_key "propietarios", "viviendas"
