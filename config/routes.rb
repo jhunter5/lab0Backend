@@ -22,4 +22,5 @@ Rails.application.routes.draw do
   end
 
   resources :alcaldias
+  resources :roles
 end
