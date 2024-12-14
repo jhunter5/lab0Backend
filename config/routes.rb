@@ -17,7 +17,9 @@ Rails.application.routes.draw do
   resources :municipios do
     member do
       get :viviendas
-      get :alcalde
+      get :alcaldia_activa
     end
   end
+
+  resources :alcaldias
 end
