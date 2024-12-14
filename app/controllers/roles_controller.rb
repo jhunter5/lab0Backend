@@ -1,5 +1,5 @@
 class RolesController < ApplicationController
-  before_action :set_rol, only: [:show, :update, :destroy]
+  before_action :set_rol, only: [:show, :update, :destroy, :empleados]
 
   def index
     roles = Rol.all
@@ -29,8 +29,42 @@ class RolesController < ApplicationController
 
   def destroy
     @rol.destroy
-    head: no_content
+    head :no_content
   end
+  
+  
+
+  # dado un rol recuperar todos los empleados que tienen ese rol
+
+  def empleados
+    empleados = @rol.empleados.includes(:persona) # Incluye la relación 'persona' para cargarla en la consulta
+    if empleados.any?
+      render json: empleados.map do |empleado|
+        {
+          id: empleado.id,
+          salario: empleado.salario,
+          tipo_contrato: empleado.tipo_contrato,
+          años_experiencia: empleado.años_experiencia,
+          fecha_ingreso: empleado.fecha_ingreso,
+          persona: {
+            id: empleado.persona.id,
+            nombre: empleado.persona.nombre,
+            edad: empleado.persona.edad,
+            telefono: empleado.persona.telefono,
+            sexo: empleado.persona.sexo
+          },
+          rol: {
+            id: empleado.rol.id,
+            nombre: empleado.rol.nombre
+          }
+        }
+      end
+    else
+      render json: { error: 'No se encontraron empleados con ese rol' }, status: 404
+    end
+  end
+  
+  
 
   private
 
@@ -41,4 +75,5 @@ class RolesController < ApplicationController
   def rol_params
     params.require(:role).permit(:nombre, :descripcion, :activo)
   end
+
 end

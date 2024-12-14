@@ -1,5 +1,5 @@
 class PersonasController < ApplicationController
-  before_action :set_persona, only: [:show, :update, :destroy, :vivienda_actual, :viviendas_propietarias]
+  before_action :set_persona, only: [:show, :update, :destroy, :vivienda_actual, :viviendas_propietarias, :empleado]
 
   # GET /personas
   def index
@@ -46,6 +46,25 @@ class PersonasController < ApplicationController
   def viviendas_propietarias
     render json: @persona.viviendas_propietarias
   end
+
+  #Dada una pesona recuperar si es empleado de una alcaldia
+  def empleado
+    empleado = @persona.empleado
+    if empleado
+      render json: {
+        salario: empleado.salario,
+        tipo_contrato: empleado.tipo_contrato,
+        años_experiencia: empleado.años_experiencia,
+        fecha_ingreso: empleado.fecha_ingreso,
+        activo: empleado.activo,
+        rol_nombre: empleado.rol.nombre, # Aquí recuperamos el nombre del rol asociado
+        alcaldia: empleado.alcaldia.municipio.nombre # Aquí recuperamos el nombre del municipio asociado a la alcaldía
+      }
+    else
+      render json: { error: 'No se encontró un empleado asociado a esta persona' }, status: :not_found
+    end
+  end
+  
 
   private
 
