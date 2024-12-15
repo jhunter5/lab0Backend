@@ -1,13 +1,11 @@
 # Limpia la base de datos
-ActiveRecord::Base.connection.execute("PRAGMA foreign_keys = OFF")
-Persona.destroy_all
-Municipio.destroy_all
-Vivienda.destroy_all
-Alcaldia.destroy_all
 Empleado.destroy_all
+Propietario.destroy_all
+Persona.destroy_all
+Alcaldia.destroy_all
+Vivienda.destroy_all
 Rol.destroy_all
-ActiveRecord::Base.connection.execute("PRAGMA foreign_keys = ON")
-
+Municipio.destroy_all
 
 # Creacion de personas
 persona1 = Persona.create!(nombre: "Juan Hunter", edad: 21, telefono: "3188387926", sexo: "Hombre")
