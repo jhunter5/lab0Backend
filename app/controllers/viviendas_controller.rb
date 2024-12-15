@@ -53,7 +53,17 @@ class ViviendasController < ApplicationController
 
   # Acción personalizada: Dada una vivienda, recuperar todas las personas que son dueñas
   def propietarios
-    render json: @vivienda.dueños
+    propietarios = @vivienda.propietarios
+    if propietarios
+      render json: {
+        direccion: @vivienda.direccion,
+        municipio: @vivienda.municipio.nombre,
+        dueños: propietarios.map { |propietario| propietario.persona }
+      }
+    else
+      render json: { error: 'No hay propietarios para esta vivienda' }, status: :not_found
+    end
+   
   end
 
   # Acción personalizada: Dada una vivienda, recuperar el municipio al que pertenece

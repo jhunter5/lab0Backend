@@ -1,5 +1,5 @@
 class Empleado < ApplicationRecord
-  belongs_to :roles
-  belongs_to :alcaldias
-  belongs_to :personas
+  belongs_to :rol
+  belongs_to :alcaldia
+  belongs_to :persona
 end

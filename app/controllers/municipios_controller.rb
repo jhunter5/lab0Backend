@@ -1,5 +1,5 @@
 class MunicipiosController < ApplicationController
-  before_action :set_municipio, only: [:show, :edit, :update, :destroy, :viviendas, :alcaldia_activa]
+  before_action :set_municipio, only: [:show, :edit, :update, :destroy, :viviendas, :alcaldia, :alcalde]
 
   # GET /municipios
   def index
@@ -51,15 +51,33 @@ class MunicipiosController < ApplicationController
     render json: @municipio.viviendas
   end
 
-  def alcaldia_activa
-    alcaldia_activa = @municipio.alcaldias.find_by(activo: true)
+  def alcaldia
+    alcaldia = @municipio.alcaldias.find_by(activo: true)
 
-    if alcaldia_activa
-      render json: alcaldia_activa
+    if alcaldia
+      render json: alcaldia
     else
       render json: { error: 'No se encontró una alcaldía activa para este municipio' }, status: 404
     end
   end
+
+  def alcalde
+    rol_id = Rol.find_by(nombre: 'Alcalde').id
+    alcalde = @municipio.alcaldias.find_by(activo: true).empleados.find_by(rol_id: rol_id)
+
+    if alcalde
+      render json: {
+        municipio: @municipio.nombre,
+        nombre: alcalde.persona.nombre,
+        edad: alcalde.persona.edad,
+        sexo: alcalde.persona.sexo
+      }
+    else
+      render json: { error: 'No se encontró un alcalde activo para este municipio' }, status: 404
+    end
+  end
+
+
   private
 
   def set_municipio
@@ -67,6 +85,6 @@ class MunicipiosController < ApplicationController
   end
 
   def municipio_params
-    params.require(:municipio).permit(:nombre, :area, :presupuesto )
+    params.require(:municipio).permit(:nombre, :area, :presupuesto)
   end
 end

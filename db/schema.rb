@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_12_14_035913) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_14_204132) do
   create_table "alcaldias", force: :cascade do |t|
     t.string "direccion"
     t.string "email"
@@ -30,14 +30,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_14_035913) do
     t.integer "años_experiencia"
     t.datetime "fecha_ingreso"
     t.boolean "activo"
-    t.integer "roles_id", null: false
-    t.integer "alcaldias_id", null: false
-    t.integer "personas_id", null: false
+    t.integer "rol_id", null: false
+    t.integer "alcaldia_id", null: false
+    t.integer "persona_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["alcaldias_id"], name: "index_empleados_on_alcaldias_id"
-    t.index ["personas_id"], name: "index_empleados_on_personas_id"
-    t.index ["roles_id"], name: "index_empleados_on_roles_id"
+    t.index ["alcaldia_id"], name: "index_empleados_on_alcaldia_id"
+    t.index ["persona_id"], name: "index_empleados_on_persona_id"
+    t.index ["rol_id"], name: "index_empleados_on_rol_id"
   end
 
   create_table "municipios", force: :cascade do |t|
@@ -87,9 +87,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_14_035913) do
   end
 
   add_foreign_key "alcaldias", "municipios"
-  add_foreign_key "empleados", "alcaldias", column: "alcaldias_id"
-  add_foreign_key "empleados", "personas", column: "personas_id"
-  add_foreign_key "empleados", "roles", column: "roles_id"
+  add_foreign_key "empleados", "alcaldias"
+  add_foreign_key "empleados", "personas"
+  add_foreign_key "empleados", "roles", column: "rol_id"
   add_foreign_key "personas", "viviendas"
   add_foreign_key "propietarios", "personas"
   add_foreign_key "propietarios", "viviendas"

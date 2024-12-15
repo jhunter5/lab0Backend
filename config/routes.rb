@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     member do
       get :vivienda_actual
       get :viviendas_propietarias
+      get :empleado
     end
   end
 
@@ -17,10 +18,20 @@ Rails.application.routes.draw do
   resources :municipios do
     member do
       get :viviendas
-      get :alcaldia_activa
+      get :alcaldia
+      get :alcalde
     end
   end
 
-  resources :alcaldias
-  resources :roles
+  resources :alcaldias do
+    member do
+      get :empleados
+    end
+  end
+
+  resources :roles do
+    member do
+      get :empleados
+    end
+  end
 end

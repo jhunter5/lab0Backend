@@ -1,5 +1,5 @@
 class AlcaldiasController < ApplicationController
-  before_action :set_alcaldia, only: [:show, :update, :destroy]
+  before_action :set_alcaldia, only: [:show, :update, :destroy, :empleados]
   def index
     alcaldias = Alcaldia.all
     render json: alcaldias
@@ -33,6 +33,34 @@ class AlcaldiasController < ApplicationController
     head :no_content
   end
 
+  def empleados
+    @empleados_activos = @alcaldia.empleados.where(activo: true)
+  
+    empleados_json = @empleados_activos.map do |empleado|
+      {
+        id: empleado.id,
+        salario: empleado.salario,
+        tipo_contrato: empleado.tipo_contrato,
+        años_experiencia: empleado.años_experiencia,
+        fecha_ingreso: empleado.fecha_ingreso,
+        persona: {
+          id: empleado.persona.id,
+          nombre: empleado.persona.nombre,
+          edad: empleado.persona.edad,
+          telefono: empleado.persona.telefono,
+          sexo: empleado.persona.sexo
+        },
+        rol: {
+          id: empleado.rol.id,
+          nombre: empleado.rol.nombre
+        }
+      }
+    end
+    
+    render json: empleados_json
+  end
+  
+  
   private
 
   def set_alcaldia
