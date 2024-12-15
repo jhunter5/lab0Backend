@@ -29,6 +29,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :empleados
+
   resources :roles do
     member do
       get :empleados
