@@ -76,6 +76,6 @@ class ViviendasController < ApplicationController
   end
 
   def vivienda_params
-    params.require(:vivienda).permit(:direccion, :municipio_id)
+    params.require(:vivienda).permit(:direccion, :capacidad, :niveles, :municipio_id)
   end
 end
