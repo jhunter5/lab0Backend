@@ -8,14 +8,7 @@ class EmpleadosController < ApplicationController
 
 
   def show
-    render json: {
-        id: @empleado.id,
-        nombre: @empleado.persona.nombre,
-        contacto: @empleado.persona.telefono,
-        alcaldia: @empleado.alcaldia.municipio.nombre,
-        rol: @empleado.rol.nombre,
-        años_experiencia: @empleado.años_experiencia,
-    }
+    render json: @empleado
   end
 
   def create
