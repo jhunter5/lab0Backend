@@ -4,7 +4,6 @@ class CreateMunicipios < ActiveRecord::Migration[7.0]
       t.string :nombre
       t.integer :area
       t.float :presupuesto
-      t.references :persona, null: false, foreign_key: true
 
       t.timestamps
     end
