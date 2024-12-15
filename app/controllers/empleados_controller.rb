@@ -1,4 +1,6 @@
 class EmpleadosController < ApplicationController
+  before_action :set_empleado, only: [:show, :update, :destroy]
+
   def index
     empleados = Empleado.all
     render json: empleados
