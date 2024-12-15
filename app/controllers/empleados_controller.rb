@@ -43,6 +43,6 @@ class EmpleadosController < ApplicationController
   end
 
   def empleado_params
-    params.require(:empleado).permit(:salario, :tipo_contrato, :años_experiencia, :fecha_ingreso, :activo, :alcaldia_id, :persona_id, :role_id)
+    params.require(:empleado).permit(:salario, :tipo_contrato, :años_experiencia, :fecha_ingreso, :activo, :alcaldia_id, :persona_id, :rol_id)
   end
 end
