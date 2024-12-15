@@ -31,8 +31,8 @@ class RolesController < ApplicationController
     @rol.destroy
     head :no_content
   end
-  
-  
+
+
 
   # dado un rol recuperar todos los empleados que tienen ese rol
 
@@ -63,13 +63,13 @@ class RolesController < ApplicationController
       render json: { error: 'No se encontraron empleados con ese rol' }, status: 404
     end
   end
-  
-  
 
   private
 
   def set_rol
     @rol = Rol.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+    render json: { error: 'Rol no encontrado', mensaje: "No se encontró un rol con ID #{params[:id]}" }, status: :not_found
   end
 
   def rol_params

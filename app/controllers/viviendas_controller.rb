@@ -17,10 +17,6 @@ class ViviendasController < ApplicationController
     @vivienda = Vivienda.new
   end
 
-  # GET /viviendas/:id/edit
-  def edit
-  end
-
   # POST /viviendas
   def create
     @vivienda = Vivienda.new(vivienda_params)
@@ -63,7 +59,7 @@ class ViviendasController < ApplicationController
     else
       render json: { error: 'No hay propietarios para esta vivienda' }, status: :not_found
     end
-   
+
   end
 
   # Acción personalizada: Dada una vivienda, recuperar el municipio al que pertenece
@@ -75,6 +71,8 @@ class ViviendasController < ApplicationController
 
   def set_vivienda
     @vivienda = Vivienda.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+    render json: { error: 'Vivienda no encontrada', mensaje: "No se encontró una vivienda con ID #{params[:id]}" }, status: :not_found
   end
 
   def vivienda_params

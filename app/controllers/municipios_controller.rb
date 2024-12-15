@@ -17,9 +17,6 @@ class MunicipiosController < ApplicationController
     @municipio = Municipio.new
   end
 
-  # GET /municipios/:id/edit
-  def edit
-  end
 
   # POST /municipios
   def create
@@ -82,6 +79,8 @@ class MunicipiosController < ApplicationController
 
   def set_municipio
     @municipio = Municipio.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: 'Municipio no encontrado', mensaje: "No se encontró un municipio con ID #{params[:id]}" }, status: :not_found
   end
 
   def municipio_params

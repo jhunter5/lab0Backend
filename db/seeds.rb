@@ -13,10 +13,10 @@ persona2 = Persona.create!(nombre: "Gabriela Guzman", edad: 20, telefono: "32145
 persona3 = Persona.create!(nombre: "Eder Cartagenero", edad: 21, telefono: "3188387926", sexo: "Hombre")
 persona4 = Persona.create!(nombre: "Luisa Perez", edad: 20, telefono: "3214582918", sexo: "Mujer")
 persona5 = Persona.create!(nombre: "Carlos Murcia", edad: 21, telefono: "3188387926", sexo: "Hombre")
-persona6 = Persona.create!(nombre: "Nicolas Maduro", edad: 62, telefono: "32054627845", sexo: "Hombre")
+persona6 = Persona.create!(nombre: "Nicolas Maduro", edad: 62, telefono: "3205462784", sexo: "Hombre")
 
 # Creacion de Municipios
-bogota = Municipio.create!(nombre: "Bogotá", area: 1000, presupuesto: 5000000000)
+bogota = Municipio.create!(nombre: "Bogota", area: 1000, presupuesto: 5000000000)
 villavicencio = Municipio.create!(nombre: "Villavicencio", area: 900, presupuesto: 2000000000)
 cali = Municipio.create!(nombre: "Cali", area: 800, presupuesto: 3000000000)
 maracaibo = Municipio.create!(nombre: "Maracaibo", area: 700, presupuesto: 10)
@@ -51,17 +51,17 @@ Propietario.create!(persona_id: persona4.id, vivienda_id: vivienda3.id)
 Propietario.create!(persona_id: persona5.id, vivienda_id: vivienda5.id)
 
 #Crear alcaldias para los municipios
-alcaldiaBogota = Alcaldia.create!(municipio_id: bogota.id, direccion: "Calle 10 # 11-12", email: "bogotaAlcaldia.gov.co", presupuesto_anual: 10000000, activo: true)
-alcaldiaVillavicencio = Alcaldia.create!(municipio_id: villavicencio.id, direccion: "Calle 11 # 12-13",  email: "villavicencioAlcaldia.gov.co", presupuesto_anual: 8000000, activo: true)
-alcaldiaCali =Alcaldia.create!(municipio_id: cali.id, direccion: "Calle 12 # 13-14",  email: "caliAlcaldia.gov.co", presupuesto_anual: 9000000, activo: true)
-alcaldiaMaracaibo =Alcaldia.create!(municipio_id: maracaibo.id, direccion: "Calle 13 # 14-15",  email: "maracaiboAlcaldia.gov.co", presupuesto_anual: 10, activo: true)
-alcaldiaVillaLeyva = Alcaldia.create!(municipio_id: villa_de_leyva.id, direccion: "Calle 14 # 15-16",  email: "villaLeyvaAlcaldia.gov.co", presupuesto_anual: 3000000, activo: true)
+alcaldiaBogota = Alcaldia.create!(municipio_id: bogota.id, direccion: "Calle 10 # 11-12", email: "bogotaAlcaldia@gov.co", presupuesto_anual: 10000000, activo: true, fecha_inicio: "2020-01-01", fecha_fin: "2024-01-01")
+alcaldiaVillavicencio = Alcaldia.create!(municipio_id: villavicencio.id, direccion: "Calle 11 # 12-13",  email: "villavicencioAlcaldia@gov.co", presupuesto_anual: 8000000, activo: true, fecha_inicio: "2020-01-01", fecha_fin: "2024-01-01")
+alcaldiaCali =Alcaldia.create!(municipio_id: cali.id, direccion: "Calle 12 # 13-14",  email: "caliAlcaldia@gov.co", presupuesto_anual: 9000000, activo: true, fecha_inicio: "2020-01-01", fecha_fin: "2024-01-01")
+alcaldiaMaracaibo =Alcaldia.create!(municipio_id: maracaibo.id, direccion: "Calle 13 # 14-15",  email: "maracaiboAlcaldia@gov.co", presupuesto_anual: 10, activo: true, fecha_inicio: "2020-01-01", fecha_fin: "2024-01-01")
+alcaldiaVillaLeyva = Alcaldia.create!(municipio_id: villa_de_leyva.id, direccion: "Calle 14 # 15-16",  email: "villaLeyvaAlcaldia@gov.co", presupuesto_anual: 3000000, activo: true, fecha_inicio: "2020-01-01", fecha_fin: "2024-01-01")
 
 #Crear roles
-Rol.create!(nombre: "Alcalde", descripcion: "Encargado de la administración del municipio", activo: true)
+Rol.create!(nombre: "Alcalde", descripcion: "Encargado de la administracion del municipio", activo: true)
 Rol.create!(nombre: "Secretario", descripcion: "Encargado de la secretaria del municipio", activo: true)
 Rol.create!(nombre: "Tesorero", descripcion: "Encargado de la tesoreria del municipio", activo: true)
-Rol.create!(nombre: "Concejal", descripcion: "Encargado de la concejalía del municipio", activo: true)
+Rol.create!(nombre: "Concejal", descripcion: "Encargado de la concejalia del municipio", activo: true)
 
 #Crear empleados
 Empleado.create!(persona_id: persona2.id, alcaldia_id: alcaldiaBogota.id, rol_id: Rol.find_by(nombre: "Alcalde").id, activo: true, salario: 1000000, tipo_contrato: "Fijo", años_experiencia: 2, fecha_ingreso: "2020-01-01")

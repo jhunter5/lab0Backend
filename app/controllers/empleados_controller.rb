@@ -6,10 +6,16 @@ class EmpleadosController < ApplicationController
     render json: empleados
   end
 
+
   def show
-    render json: @empleado
-    rescue ActiveRecord::RecordNotFound
-      render json: { error: 'Empleado no encontrado' }, status: :not_found
+    render json: {
+        id: @empleado.id,
+        nombre: @empleado.persona.nombre,
+        contacto: @empleado.persona.telefono,
+        alcaldia: @empleado.alcaldia.municipio.nombre,
+        rol: @empleado.rol.nombre,
+        años_experiencia: @empleado.años_experiencia,
+    }
   end
 
   def create
@@ -39,6 +45,8 @@ class EmpleadosController < ApplicationController
 
   def set_empleado
     @empleado = Empleado.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: 'Empleado no encontrado', mensaje: "No se encontró un empleado con ID #{params[:id]}" }, status: :not_found
   end
 
   def empleado_params

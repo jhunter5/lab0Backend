@@ -64,14 +64,14 @@ class PersonasController < ApplicationController
       render json: { error: 'No se encontró un empleado asociado a esta persona' }, status: :not_found
     end
   end
-  
+
 
   private
 
   def set_persona
     @persona = Persona.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Persona no encontrada' }, status: :not_found
+    render json: { error: 'Persona no encontrada', mensaje: "No se encontró una persona con ID #{params[:id]}" }, status: :not_found
   end
 
   def persona_params

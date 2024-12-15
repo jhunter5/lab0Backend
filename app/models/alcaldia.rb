@@ -8,4 +8,14 @@ class Alcaldia < ApplicationRecord
   validates :presupuesto_anual, numericality: { greater_than: 0 , message: "El presupuesto anual debe ser mayor a 0"}
   validates :fecha_fin, comparison: { greater_than: :fecha_inicio, message: "La fecha de fin debe ser mayor a la fecha de inicio" }
   validates :activo, inclusion: { in: [true, false], message: "El campo activo debe ser verdadero o falso" }
+
+  validate :valid_foreign_key
+
+  private
+
+  def valid_foreign_key
+    unless Municipio.exists?(municipio_id)
+      errors.add(:municipio_id, "El municipio no existe")
+    end
+  end
 end

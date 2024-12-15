@@ -7,8 +7,6 @@ class AlcaldiasController < ApplicationController
 
   def show
     render json: @alcaldia
-    rescue ActiveRecord::RecordNotFound
-      render json: { error: 'Alcaldia no encontrada' }, status: :not_found
   end
 
   def create
@@ -16,7 +14,7 @@ class AlcaldiasController < ApplicationController
     if @alcaldia.save
         render json: @alcaldia, status: :created
     else
-        render json: @alcaldia.erros, status: :unprocessable_entity
+        render json: @alcaldia.errors, status: :unprocessable_entity
     end
   end
 
@@ -35,7 +33,7 @@ class AlcaldiasController < ApplicationController
 
   def empleados
     @empleados_activos = @alcaldia.empleados.where(activo: true)
-  
+
     empleados_json = @empleados_activos.map do |empleado|
       {
         id: empleado.id,
@@ -56,15 +54,17 @@ class AlcaldiasController < ApplicationController
         }
       }
     end
-    
+
     render json: empleados_json
   end
-  
-  
+
+
   private
 
   def set_alcaldia
     @alcaldia = Alcaldia.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: 'Alcaldia no encontrada', mensaje: "No se encontró una alcaldía con ID #{params[:id]}" }, status: :not_found
   end
 
   def alcaldia_params

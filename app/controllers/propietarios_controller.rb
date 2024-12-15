@@ -17,10 +17,6 @@ class PropietariosController < ApplicationController
     @propietario = Propietario.new
   end
 
-  # GET /propietarios/:id/edit
-  def edit
-  end
-
   # POST /propietarios
   def create
     @propietario = Propietario.new(propietario_params)
@@ -50,6 +46,8 @@ class PropietariosController < ApplicationController
 
   def set_propietario
     @propietario = Propietario.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+    render json: { error: 'Propietario no encontrado', mensaje: "No se encontró un propeitariocon ID #{params[:id]}" }, status: :not_found
   end
 
   def propietario_params
