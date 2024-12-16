@@ -10,6 +10,7 @@ class Alcaldia < ApplicationRecord
   validates :activo, inclusion: { in: [true, false], message: "El campo activo debe ser verdadero o falso" }
 
   validate :valid_foreign_key
+  validate :alcaldia_already_exists, on: :create
 
   private
 
@@ -17,5 +18,10 @@ class Alcaldia < ApplicationRecord
     unless Municipio.exists?(municipio_id)
       errors.add(:municipio_id, "El municipio no existe")
     end
+  end
+
+  def alcaldia_already_exists
+    if Alcaldia.exists?(municipio_id: municipio_id)
+    errors.add(:municipio_id, "Ya existe una alcaldía para este municipio")
   end
 end

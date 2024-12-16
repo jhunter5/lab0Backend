@@ -15,7 +15,7 @@ class RolesController < ApplicationController
     if @rol.save
         render json: @rol, status: :created
     else
-        render json: @rol.error, status: :unprocessable_entity
+        render json: { errors: @rol.errors }, status: :unprocessable_entity
     end
   end
 
@@ -23,7 +23,7 @@ class RolesController < ApplicationController
     if @rol.update(rol_params)
       render json: @rol, status: :accepted
     else
-      render json: @rol.error, status: :unprocessable_entity
+      render json:  { errors: @rol.errors }, status: :unprocessable_entity
     end
   end
 
@@ -69,7 +69,7 @@ class RolesController < ApplicationController
   def set_rol
     @rol = Rol.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Rol no encontrado', mensaje: "No se encontró un rol con ID #{params[:id]}" }, status: :not_found
+    render json: { errors: 'Rol no encontrado', mensaje: "No se encontró un rol con ID #{params[:id]}" }, status: :not_found
   end
 
   def rol_params

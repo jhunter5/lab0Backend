@@ -23,7 +23,7 @@ class ViviendasController < ApplicationController
     if @vivienda.save
       render json: @vivienda, status: :created
     else
-      render json: @vivienda.errors, status: :unprocessable_entity
+      render json: {errors: @vivienda.errors}, status: :unprocessable_entity
     end
   end
 
@@ -32,7 +32,7 @@ class ViviendasController < ApplicationController
     if @vivienda.update(vivienda_params)
       render json: @vivienda
     else
-      render json: @vivienda.errors, status: :unprocessable_entity
+      render json: { errors: @vivienda.errors}, status: :unprocessable_entity
     end
   end
 
@@ -72,7 +72,7 @@ class ViviendasController < ApplicationController
   def set_vivienda
     @vivienda = Vivienda.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Vivienda no encontrada', mensaje: "No se encontró una vivienda con ID #{params[:id]}" }, status: :not_found
+    render json: { errors: 'Vivienda no encontrada', mensaje: "No se encontró una vivienda con ID #{params[:id]}" }, status: :not_found
   end
 
   def vivienda_params

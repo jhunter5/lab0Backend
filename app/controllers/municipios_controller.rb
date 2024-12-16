@@ -15,6 +15,11 @@ class MunicipiosController < ApplicationController
   # GET /municipios/new
   def new
     @municipio = Municipio.new
+    if @municipio.save
+      render json: @municipio, status: :created
+    else
+      render json: {errors: @municipio.errors}, status: :unprocessable_entity
+    end
   end
 
 
@@ -24,7 +29,7 @@ class MunicipiosController < ApplicationController
     if @municipio.save
       render json: @municipio, status: :created
     else
-      render json: @municipio.errors, status: :unprocessable_entity
+      render json: {errors: @municipio.errors}, status: :unprocessable_entity
     end
   end
 
@@ -80,7 +85,7 @@ class MunicipiosController < ApplicationController
   def set_municipio
     @municipio = Municipio.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Municipio no encontrado', mensaje: "No se encontró un municipio con ID #{params[:id]}" }, status: :not_found
+    render json: { errors: 'Municipio no encontrado', mensaje: "No se encontró un municipio con ID #{params[:id]}" }, status: :not_found
   end
 
   def municipio_params

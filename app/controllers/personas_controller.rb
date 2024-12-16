@@ -61,7 +61,7 @@ class PersonasController < ApplicationController
         alcaldia: empleado.alcaldia.municipio.nombre # Aquí recuperamos el nombre del municipio asociado a la alcaldía
       }
     else
-      render json: { error: 'No se encontró un empleado asociado a esta persona' }, status: :not_found
+      render json: { errors: 'No se encontró un empleado asociado a esta persona' }, status: :not_found
     end
   end
 
@@ -71,7 +71,7 @@ class PersonasController < ApplicationController
   def set_persona
     @persona = Persona.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Persona no encontrada', mensaje: "No se encontró una persona con ID #{params[:id]}" }, status: :not_found
+    render json: { errors: 'Persona no encontrada', mensaje: "No se encontró una persona con ID #{params[:id]}" }, status: :not_found
   end
 
   def persona_params

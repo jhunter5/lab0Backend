@@ -16,7 +16,7 @@ class EmpleadosController < ApplicationController
     if @empleado.save
         render json: @empleado, status: :created
     else
-        render json: @empleado.erros, status: :unprocessable_entity
+        render json:{ errors: @empleado.errors}, status: :unprocessable_entity
     end
   end
 
@@ -24,7 +24,7 @@ class EmpleadosController < ApplicationController
     if @empleado.update(empleado_params)
       render json: @empleado
     else
-      render json: @empleado.errors, status: :unprocessable_entity
+      render json: {errors: @empleado.errors}, status: :unprocessable_entity
     end
   end
 
@@ -39,7 +39,7 @@ class EmpleadosController < ApplicationController
   def set_empleado
     @empleado = Empleado.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Empleado no encontrado', mensaje: "No se encontró un empleado con ID #{params[:id]}" }, status: :not_found
+    render json: { errors: 'Empleado no encontrado', mensaje: "No se encontró un empleado con ID #{params[:id]}" }, status: :not_found
   end
 
   def empleado_params

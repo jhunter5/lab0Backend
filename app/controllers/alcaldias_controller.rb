@@ -14,7 +14,7 @@ class AlcaldiasController < ApplicationController
     if @alcaldia.save
         render json: @alcaldia, status: :created
     else
-        render json: @alcaldia.errors, status: :unprocessable_entity
+        render json: { errors: @alcaldia.errors }, status: :unprocessable_entity
     end
   end
 
@@ -22,7 +22,7 @@ class AlcaldiasController < ApplicationController
     if @alcaldia.update(alcaldia_params)
       render json: @alcaldia
     else
-      render json: @alcaldia.errors, status: :unprocessable_entity
+      render json: { errors: @alcaldia.errors}, status: :unprocessable_entity
     end
   end
 
@@ -64,7 +64,7 @@ class AlcaldiasController < ApplicationController
   def set_alcaldia
     @alcaldia = Alcaldia.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Alcaldia no encontrada', mensaje: "No se encontró una alcaldía con ID #{params[:id]}" }, status: :not_found
+    render json: { errors: 'Alcaldia no encontrada', mensaje: "No se encontró una alcaldía con ID #{params[:id]}" }, status: :not_found
   end
 
   def alcaldia_params

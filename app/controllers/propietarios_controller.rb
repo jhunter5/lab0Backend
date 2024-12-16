@@ -23,7 +23,7 @@ class PropietariosController < ApplicationController
     if @propietario.save
       render json: @propietario, status: :created
     else
-      render json: @propietario.errors, status: :unprocessable_entity
+      render json: { errors: @propietario.errors }, status: :unprocessable_entity
     end
   end
 
@@ -32,7 +32,7 @@ class PropietariosController < ApplicationController
     if @propietario.update(propietario_params)
       render json: @propietario
     else
-      render json: @propietario.errors, status: :unprocessable_entity
+      render json: { errors: @propietario.errors }, status: :unprocessable_entity
     end
   end
 
@@ -47,7 +47,7 @@ class PropietariosController < ApplicationController
   def set_propietario
     @propietario = Propietario.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Propietario no encontrado', mensaje: "No se encontró un propeitariocon ID #{params[:id]}" }, status: :not_found
+    render json: { errors: 'Propietario no encontrado', mensaje: "No se encontró un propeitariocon ID #{params[:id]}" }, status: :not_found
   end
 
   def propietario_params
