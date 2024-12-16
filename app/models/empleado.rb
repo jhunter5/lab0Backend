@@ -16,6 +16,7 @@ class Empleado < ApplicationRecord
 
   # Validación personalizada
   validate :valid_foreign_keys
+  validate :single_alcalde_per_alcaldia
 
   private
 
@@ -29,6 +30,16 @@ class Empleado < ApplicationRecord
     end
     unless Persona.exists?(persona_id)
       errors.add(:persona_id, "La persona no existe")
+    end
+  end
+
+  # Validación personalizada para garantizar que solo haya un alcalde por alcaldía
+  def single_alcalde_per_alcaldia
+    if rol_id == Rol.find_by(nombre: 'Alcalde')&.id
+      existing_alcaldes_count = Empleado.where(alcaldia_id: alcaldia_id, rol_id: Rol.find_by(nombre: 'Alcalde')&.id).count
+      if existing_alcaldes_count > 0
+        errors.add(:alcaldia_id, "Ya existe un empleado con el rol de Alcalde en esta alcaldía")
+      end
     end
   end
 end
