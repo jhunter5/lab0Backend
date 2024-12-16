@@ -22,6 +22,7 @@ class Alcaldia < ApplicationRecord
 
   def alcaldia_already_exists
     if Alcaldia.exists?(municipio_id: municipio_id)
-    errors.add(:municipio_id, "Ya existe una alcaldía para este municipio")
+      errors.add(:municipio_id, "Ya existe una alcaldía para este municipio")
+    end
   end
 end
