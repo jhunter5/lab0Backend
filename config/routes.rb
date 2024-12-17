@@ -4,6 +4,8 @@ Rails.application.routes.draw do
       get :vivienda_actual
       get :viviendas_propietarias
       get :empleado
+      get :padre
+      get :hijos
     end
   end
 

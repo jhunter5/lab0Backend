@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_12_14_204132) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_17_124940) do
   create_table "alcaldias", force: :cascade do |t|
     t.string "direccion"
     t.string "email"
@@ -56,6 +56,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_14_204132) do
     t.integer "vivienda_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "padre_id"
+    t.index ["padre_id"], name: "index_personas_on_padre_id"
     t.index ["vivienda_id"], name: "index_personas_on_vivienda_id"
   end
 
@@ -90,6 +92,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_14_204132) do
   add_foreign_key "empleados", "alcaldias"
   add_foreign_key "empleados", "personas"
   add_foreign_key "empleados", "roles", column: "rol_id"
+  add_foreign_key "personas", "personas", column: "padre_id"
   add_foreign_key "personas", "viviendas"
   add_foreign_key "propietarios", "personas"
   add_foreign_key "propietarios", "viviendas"

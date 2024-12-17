@@ -11,6 +11,8 @@ class Alcaldia < ApplicationRecord
 
   validate :valid_foreign_key
   validate :alcaldia_already_exists, on: :create
+  validate :presupuesto_anual_no_excede_presupuesto_municipio
+  validate :duracion_maxima_cuatro_años
 
   private
 
@@ -25,4 +27,20 @@ class Alcaldia < ApplicationRecord
       errors.add(:municipio_id, "Ya existe una alcaldía para este municipio")
     end
   end
+
+  def presupuesto_anual_no_excede_presupuesto_municipio
+    if municipio.present? && presupuesto_anual > municipio.presupuesto
+      errors.add(:presupuesto_anual, "no puede ser mayor al presupuesto del municipio")
+    end
+  end
+
+  def duracion_maxima_cuatro_años
+    if fecha_inicio.present? && fecha_fin.present?
+      max_fecha_fin = fecha_inicio.advance(years: 4)
+      if fecha_fin > max_fecha_fin
+        errors.add(:fecha_fin, "La duración entre fecha de inicio y fecha de fin no puede superar los 4 años")
+      end
+    end
+  end
+
 end

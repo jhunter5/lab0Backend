@@ -65,16 +65,31 @@ class PersonasController < ApplicationController
     end
   end
 
+  # GET /personas/:id/hijos
+  def hijos
+    hijos = @persona.hijos
+    render json: hijos
+  end
+
+  def padre
+    padre = @persona.padre
+    if padre
+      render json: padre
+    else
+      render json: { errors: 'No se encontró un padre asociado a esta persona' }, status: :not_found
+    end
+  end
 
   private
 
   def set_persona
     @persona = Persona.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
+    rescue ActiveRecord::RecordNotFound
     render json: { errors: 'Persona no encontrada', mensaje: "No se encontró una persona con ID #{params[:id]}" }, status: :not_found
   end
 
   def persona_params
-    params.require(:persona).permit(:nombre, :edad, :vivienda_id, :telefono, :sexo)
+    params.require(:persona).permit(:nombre, :edad, :vivienda_id, :telefono, :sexo, :padre_id)
   end
+
 end

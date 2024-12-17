@@ -17,6 +17,8 @@ class Empleado < ApplicationRecord
   # Validación personalizada
   validate :valid_foreign_keys
   validate :single_alcalde_per_alcaldia
+  validate :años_experiencia_no_mayor_que_edad_persona
+  validate :salario_no_mayor_que_presupuesto_alcaldia
 
   private
 
@@ -42,4 +44,21 @@ class Empleado < ApplicationRecord
       end
     end
   end
+
+  def años_experiencia_no_mayor_que_edad_persona
+    if persona.present? && años_experiencia.present? && persona.edad.present?
+      if años_experiencia > persona.edad
+        errors.add(:años_experiencia, "No pueden ser superiores a la edad de la persona asociada")
+      end
+    end
+  end
+
+  def salario_no_mayor_que_presupuesto_alcaldia
+    if alcaldia.present? && salario.present?
+      if salario > alcaldia.presupuesto_anual
+        errors.add(:salario, "no puede ser mayor al presupuesto anual de la alcaldía")
+      end
+    end
+  end
+
 end
